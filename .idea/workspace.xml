@@ -23,19 +23,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/canvas/js-basics/implement-async/async.js">
+        <entry file="file://$PROJECT_DIR$/js-basics/implement-async/demo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+            <state relative-caret-position="144">
+              <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/canvas/js-basics/implement-async/demo.html">
+        <entry file="file://$PROJECT_DIR$/js-basics/implement-async/async.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+            <state relative-caret-position="560">
+              <caret line="61" column="10" selection-start-line="61" selection-start-column="10" selection-end-line="61" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -51,6 +51,7 @@
         <option value="$PROJECT_DIR$/canvas/text-particle/text-particle.js" />
         <option value="$PROJECT_DIR$/canvas/text-particle/demo.html" />
         <option value="$PROJECT_DIR$/canvas/js-basics/async-implement/async.js" />
+        <option value="$PROJECT_DIR$/js-basics/implement-async/async.js" />
       </list>
     </option>
   </component>
@@ -81,13 +82,11 @@
             <path>
               <item name="blog-record" type="b2602c69:ProjectViewProjectNode" />
               <item name="blog-record" type="462c0819:PsiDirectoryNode" />
-              <item name="canvas" type="462c0819:PsiDirectoryNode" />
               <item name="js-basics" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="blog-record" type="b2602c69:ProjectViewProjectNode" />
               <item name="blog-record" type="462c0819:PsiDirectoryNode" />
-              <item name="canvas" type="462c0819:PsiDirectoryNode" />
               <item name="js-basics" type="462c0819:PsiDirectoryNode" />
               <item name="implement-async" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -138,15 +137,16 @@
       <workItem from="1561465117806" duration="8407000" />
       <workItem from="1561553596010" duration="932000" />
       <workItem from="1561555194110" duration="1187000" />
-      <workItem from="1561557681676" duration="327000" />
+      <workItem from="1561557681676" duration="558000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10853000" />
+    <option name="totallyTimeSpent" value="11084000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24966975" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -179,17 +179,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/canvas/js-basics/implement-async/async.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/canvas/js-basics/implement-async/demo.html">
+    <entry file="file://$PROJECT_DIR$/js-basics/implement-async/demo.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js-basics/implement-async/async.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="61" column="10" selection-start-line="61" selection-start-column="10" selection-end-line="61" selection-end-column="10" />
         </state>
       </provider>
     </entry>
