@@ -23,7 +23,7 @@
     //默认字体大小
     const DEF_FONT = '100px Calibri';
     // 默认粒子色彩
-    const DEF_COLOR = '#FEDFE1';
+    const DEF_COLOR = '#fff';
     // 默认粒子半径
     const DEF_R = 2;
     // 粒子汇聚最小速度
