@@ -46,10 +46,10 @@ function beAsync() {
                 try {
                     next = nextF();
                 } catch (err) {
-                    reject(err);
+                    return reject(err);
                 }
                 if (next.done) {
-                    resolve(next.value);
+                    return resolve(next.value);
                 }
                 Promise.resolve(next.value).then(v => step(() => gen.next(v)),
                 err => step(() => gen.throw(err)));
