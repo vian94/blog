@@ -67,12 +67,8 @@
         // 移动
         move(tarX, tarY) {
             this.frame++;
-            if (tarX) {
-                this.tarX = tarX;
-            }
-            if (tarY) {
-                this.tarY = tarY;
-            }
+            this.tarX = tarX || this.tarX;
+            this.tarY = tarY || this.tarY;
             // 距离小于速度，直接移动到目的地
             if (Math.abs(this.x - this.tarX) <= this.v) {
                 this.x = this.tarX;
