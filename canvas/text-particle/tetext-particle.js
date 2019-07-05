@@ -113,7 +113,7 @@
         };
     }
 
-    class TextBlock {
+    class WordBlock {
         constructor(value, posData) {
             this.value = value; // 文字内容
             this.particles = []; // 文字包含的粒子
@@ -265,7 +265,7 @@
             // 获取字符的粒子位置
             let wordPos = getWordParticlePos(baseText, word);
             baseText += word;
-            WORD_CACHE.splice(idx++, 0, new TextBlock(word, wordPos));
+            WORD_CACHE.splice(idx++, 0, new WordBlock(word, wordPos));
         });
         // 插入字符的后面部分，重置坐标（右移动）
         for (let i = selectionState.start + insertCount; i < WORD_CACHE.length; i++) {
