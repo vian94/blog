@@ -10,56 +10,56 @@
 
 
 (() => {
-    let canvas = document.getElementById('canvas'),
-        ctx = canvas.getContext('2d'),
-        input = document.querySelector('input');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const input = document.querySelector('input');
 
-    const WIN_WIDTH = document.documentElement.clientWidth,
-          WIN_HEIGHT = document.documentElement.clientHeight;
+    const clientWidth = document.documentElement.clientWidth;
+    const clientHeight = document.documentElement.clientHeight;
     // 全屏canvas
-    canvas.width = WIN_WIDTH;
-    canvas.height = WIN_HEIGHT;
+    canvas.width = clientWidth;
+    canvas.height = clientHeight;
 
     //默认字体大小
-    const DEF_FONT = '100px Calibri';
+    const defaultFont = '100px Calibri';
     // 默认粒子色彩
-    const DEF_COLOR = '#fff';
+    const defaultColor = '#fff';
     // 默认粒子半径
-    const DEF_R = 2;
+    const defaultR = 2;
     // 粒子汇聚最小速度
-    const MIN_V = 15;
+    const minV = 15;
     // 粒子散开速度
-    const DIVIDE_V = 6;
+    const divideV = 6;
     // 粒子散开坐标差值
-    const DIVIDE = 50;
+    const divideDiff = 50;
     // 粒子闪动频率（多少帧闪一下）
-    const BLINK_COUNT = 20;
+    const binlkFrequency = 20;
     // 文字块储存数组
-    const WORD_CACHE = [];
+    const wordCache = [];
     // 待消亡的文字块
-    const WORD_DEAD = [];
+    const wordDeadCache = [];
     // 动画标志
     let rafID;
 
     // 随机颜色
     function getRandomColor() {
-        let r = Math.floor(Math.random() * 255),
-         g = Math.floor(Math.random() * 255),
-         b = Math.floor(Math.random() * 255);
-         return `rgba(${r},${g},${b},0.8)`;
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
+        return `rgba(${r},${g},${b},0.8)`;
     }
     // 粒子定义
     class Particle {
-        constructor({x = Math.floor(Math.random() * WIN_WIDTH),
-                     y = Math.floor(Math.random() * WIN_HEIGHT),
-                     r = DEF_R,
-                     color = DEF_COLOR}) {
+        constructor({x = Math.floor(Math.random() * clientWidth),
+                     y = Math.floor(Math.random() * clientHeight),
+                     r = defaultR,
+                     color = defaultColor}) {
             this.x = x;
             this.y = y;
             this.r = r;
             this.color = color;
-            let randomV = Math.ceil(Math.random() * 10 + 10);
-            this.v = randomV >= MIN_V ? randomV : MIN_V;
+            const randomV = Math.ceil(Math.random() * 10 + 10);
+            this.v = randomV >= minV ? randomV : minV;
             this.tarX = x;
             this.tarY = y;
             this.frame = 0;
@@ -80,18 +80,18 @@
             // 粒子到达预定位置后，变换半径
             if (this.x === this.tarX &&
                 this.y === this.tarY &&
-                this.frame >= BLINK_COUNT) {
+                this.frame >= binlkFrequency) {
                 this.frame = 0;
                 this.blink();
                 return;
             }
             // 运动方向
-            let directX = this.x === this.tarX
+            const directX = this.x === this.tarX
                     ? 0
                     : this.x < this.tarX
                         ? 1
-                        : -1,
-                directY = this.y === this.tarY
+                        : -1;
+            const directY = this.y === this.tarY
                     ? 0
                     : this.y < this.tarY
                         ? 1
@@ -101,8 +101,8 @@
         }
         // 闪动
         blink() {
-            let randomR = Math.random() * DEF_R;
-            this.r = randomR <= 1 ? DEF_R / 2 : randomR;
+            const randomR = Math.random() * defaultR;
+            this.r = randomR <= 1 ? defaultR / 2 : randomR;
         }
         // 画
         draw() {
@@ -119,44 +119,44 @@
             this.particles = []; // 文字包含的粒子
             // 根据位置数据初始化文字粒子
             posData.forEach(pos => {
-                let p = new Particle({});
-                p.tarX = pos.x;
-                p.tarY = pos.y;
-                this.particles.push(p);
+                const particle = new Particle({});
+                particle.tarX = pos.x;
+                particle.tarY = pos.y;
+                this.particles.push(particle);
             });
         }
 
         // 粒子聚集成文字
         form() {
-            this.particles.forEach(p => {
-                p.move();
-                p.draw();
+            this.particles.forEach(particle => {
+                particle.move();
+                particle.draw();
             });
         }
 
         // 文字分散成粒子，消失
         divide() {
             for (let i = 0; i < this.particles.length; i++) {
-                let p = this.particles[i];
-                let dividePos = getDividePos(p.x, p.y);
-                p.divideX = p.divideX ? p.divideX : dividePos.x;
-                p.divideY = p.divideY ? p.divideY : dividePos.y;
-                if (p.x === p.divideX &&
-                    p.y === p.divideY) {
+                const particle = this.particles[i];
+                const dividePos = getDividePos(particle.x, particle.y);
+                particle.divideX = particle.divideX || dividePos.x;
+                particle.divideY = particle.divideY || dividePos.y;
+                if (particle.x === particle.divideX &&
+                    particle.y === particle.divideY) {
                     this.particles.splice(i, 1);
                     i--;
                     continue;
                 }
-                p.v = DIVIDE_V;
-                p.move(p.divideX, p.divideY);
-                p.draw();
+                particle.v = divideV;
+                particle.move(particle.divideX, particle.divideY);
+                particle.draw();
             }
         }
 
         // 重置目的地
         resetDestination(posData) {
             // 目前粒子不足以形成文字，补充粒子
-            let diff = this.particles.length - posData.length;
+            const diff = this.particles.length - posData.length;
             if (diff < 0) {
                 for (let i = 0; i < -diff; i++) {
                     this.particles.push(new Particle({}));
@@ -172,31 +172,31 @@
         }
     }
 
-    // 获取粒子散开的目标坐标：[x - DIVIDE, x + DIVIDE]  [y - DIVIDE, y + DIVIDE]
+    // 获取粒子散开的目标坐标：[x - divideDiff, x + divideDiff]  [y - divideDiff, y + divideDiff]
     function getDividePos(x, y) {
         // 散开方向随机
-        let directX = Math.random() >= 0.5
+        const directX = Math.random() >= 0.5
                 ? 1 // 正向
-                : -1, // 反向
-            directY = Math.random() >= 0.5
+                : -1; // 反向
+        const directY = Math.random() >= 0.5
                 ? 1
                 : -1;
-        let tarX = x + directX * DIVIDE,
-            tarY = y + directY * DIVIDE;
-        return {x: tarX, y: tarY};
+        const tarX = x + directX * divideDiff;
+        const tarY = y + directY * divideDiff;
+        return { x: tarX, y: tarY };
     }
 
     // 动起来
     function animate() {
-        ctx.clearRect(0, 0, WIN_WIDTH, WIN_HEIGHT);
-        WORD_CACHE.forEach(wordBlock => {
+        ctx.clearRect(0, 0, clientWidth, clientHeight);
+        wordCache.forEach(wordBlock => {
             wordBlock.form();
         });
-        if (WORD_DEAD.length) {
-            for (let i = 0; i < WORD_DEAD.length; i++) {
-                let deadWord = WORD_DEAD[i];
+        if (wordDeadCache.length) {
+            for (let i = 0; i < wordDeadCache.length; i++) {
+                let deadWord = wordDeadCache[i];
                 if (!deadWord.particles.length) {
-                    WORD_DEAD.splice(i, 1);
+                    wordDeadCache.splice(i, 1);
                     i--;
                     continue;
                 }
@@ -212,22 +212,22 @@
      * @return {Array}
      * */
     function getWordParticlePos(text, word) {
-        let pos = [];
-        ctx.clearRect(0, 0, WIN_WIDTH, WIN_HEIGHT);
-        ctx.font = DEF_FONT;
-        let textLength = ctx.measureText(text).width;
-        ctx.fillText(word, textLength, WIN_HEIGHT * 0.4);
-        let imageData = ctx.getImageData(0, 0, WIN_WIDTH, WIN_HEIGHT);
+        const pos = [];
+        ctx.clearRect(0, 0, clientWidth, clientHeight);
+        ctx.font = defaultFont;
+        const textLength = ctx.measureText(text).width;
+        ctx.fillText(word, textLength, clientHeight * 0.4);
+        const imageData = ctx.getImageData(0, 0, clientWidth, clientHeight);
         // 获取文字粒子位置
         for (let x = 0; x < imageData.width; x += 4) {
             for (let y = 0; y < imageData.height; y += 4) {
-                let i = (imageData.width * y + x) * 4;
-                if(imageData.data[i+3] > 128){
-                    pos.push({x, y});
+                const i = (imageData.width * y + x) * 4;
+                if(imageData.data[i + 3] > 128){
+                    pos.push({ x, y });
                 }
             }
         }
-        ctx.clearRect(0, 0, WIN_WIDTH, WIN_HEIGHT);
+        ctx.clearRect(0, 0, clientWidth, clientHeight);
         return pos;
     }
 
@@ -235,7 +235,7 @@
     function getBaseText(start, end) {
         let text = '';
         for (let i = start; i < end; i++) {
-            text += WORD_CACHE[i].value;
+            text += wordCache[i].value;
         }
         return text;
     }
@@ -246,38 +246,42 @@
             cancelAnimationFrame(rafID);
         }
         // 所有的input变化都可以分解为：删除字符 + 添加字符
-        let words = srcElement.value.split(''),
-            delCount = selectionState.end - selectionState.start,
-            insertCount = srcElement.selectionStart - selectionState.start;
+        const words = srcElement.value.split('');
+        let delCount = selectionState.end - selectionState.start;
+        let insertCount = srcElement.selectionStart - selectionState.start;
         if (insertCount < 0) {
             delCount = -insertCount;
             insertCount = 0;
             selectionState.start -= delCount;
         }
-        let insertWords = words.splice(selectionState.start, insertCount);
+        const insertWords = words.splice(selectionState.start, insertCount);
         // 删除字符、增加需要散开的字符
-        WORD_DEAD.push(...WORD_CACHE.splice(selectionState.start, delCount));
+        wordDeadCache.push(...wordCache.splice(selectionState.start, delCount));
         // 前面已存在的字符串
         let baseText = getBaseText(0, selectionState.start);
         // 插入字符
         let idx = selectionState.start;
         insertWords.forEach(word => {
             // 获取字符的粒子位置
-            let wordPos = getWordParticlePos(baseText, word);
+            const wordPos = getWordParticlePos(baseText, word);
             baseText += word;
-            WORD_CACHE.splice(idx++, 0, new WordBlock(word, wordPos));
+            wordCache.splice(idx++, 0, new WordBlock(word, wordPos));
         });
         // 插入字符的后面部分，重置坐标（右移动）
-        for (let i = selectionState.start + insertCount; i < WORD_CACHE.length; i++) {
-            let wordPos = getWordParticlePos(baseText, WORD_CACHE[i].value);
-            baseText += WORD_CACHE[i].value;
-            WORD_CACHE[i].resetDestination(wordPos);
+        const index = selectionState.start + insertCount;
+        for (let i = index; i < wordCache.length; i++) {
+            const wordPos = getWordParticlePos(baseText, wordCache[i].value);
+            baseText += wordCache[i].value;
+            wordCache[i].resetDestination(wordPos);
         }
         animate();
     }
 
     // input触发前的焦点索引
-    let selectionState = {};
+    const selectionState = {
+        start: null,
+        end: null,
+    };
     function updateSelectionState(srcElement) {
         selectionState.start = srcElement.selectionStart;
         selectionState.end = srcElement.selectionEnd;
